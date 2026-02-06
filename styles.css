@@ -105,22 +105,72 @@ body{
   color: #4b433d;
 }
 
-/* 버튼을 '의식감' 있게 */
+/* 종이 스티커 버튼 */
 #openBtn{
   position: relative;
   width: 100%;
   padding: 13px 14px;
-  border: none;
   border-radius: 16px;
-  background: var(--accent-dark);
-  color: #fff;
+
+  /* ✅ 스티커 종이 톤 */
+  background: rgba(255,255,255,0.92);
+  color: #2e2e2e;
+
+  /* ✅ 얇은 테두리(종이 가장자리) */
+  border: 1px solid rgba(226,217,208,0.9);
+
+  /* ✅ 살짝 뜬 느낌 */
+  box-shadow:
+    0 10px 20px rgba(0,0,0,0.08),
+    0 1px 0 rgba(255,255,255,0.8) inset;
+
   font-size: 15px;
   font-weight: 850;
   cursor: pointer;
+
+  /* 눌림 애니메이션 부드럽게 */
+  transition: transform 120ms ease, box-shadow 120ms ease, opacity 120ms ease;
 }
 
-#openBtn:hover{ opacity: 0.96; }
-#openBtn:active{ transform: scale(0.99); }
+/* 위쪽에 아주 은은한 테이프/스티커 하이라이트 */
+#openBtn::before{
+  content:"";
+  position:absolute;
+  left: 12px;
+  right: 12px;
+  top: 7px;
+  height: 10px;
+  border-radius: 999px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.9), rgba(255,255,255,0));
+  opacity: 0.7;
+  pointer-events:none;
+}
+
+/* 아래에 아주 은은한 마젠타 포인트(리본 느낌 살짝) */
+#openBtn::after{
+  content:"";
+  position:absolute;
+  left: 18px;
+  right: 18px;
+  bottom: 6px;
+  height: 2px;
+  border-radius: 999px;
+  background: rgba(143,43,74,0.35);
+  pointer-events:none;
+}
+
+/* hover(PC) */
+#openBtn:hover{
+  opacity: 0.98;
+}
+
+/* ✅ 눌릴 때 효과 유지(더 자연스럽게) */
+#openBtn:active{
+  transform: scale(0.99) translateY(1px);
+  box-shadow:
+    0 6px 14px rgba(0,0,0,0.08),
+    0 1px 0 rgba(255,255,255,0.7) inset;
+}
 
 
 /* Hero with 3D */
