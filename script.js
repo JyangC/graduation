@@ -9,12 +9,31 @@ window.addEventListener("DOMContentLoaded", () => {
   if (!openBtn || !cover || !content) {
     console.log("Missing elements:", { openBtn, cover, content });
     return;
+
+  // 스크롤 페이드인(C)
+  const reveals = document.querySelectorAll(".reveal");
+  const io = new IntersectionObserver((entries) => {
+    for (const e of entries) {
+      if (e.isIntersecting) {
+        e.target.classList.add("show");
+        io.unobserve(e.target);
+      }
+    }
+  }, { threshold: 0.12 });
+  
+  reveals.forEach(el => io.observe(el));
+
+
+
+    
   }
 
   let playing = false;
 
   openBtn.addEventListener("click", async () => {
     console.log("open clicked"); // ✅ 디버그용 (잘 되면 콘솔에 찍힘)
+    document.querySelectorAll(".reveal").forEach(el => el.classList.add("show"));
+
 
     // 화면 전환 먼저 (음악이 막혀도 넘어가게)
     cover.classList.add("hide");
