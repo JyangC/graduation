@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Graduation Invitation</title>
+
+  <!-- model-viewer -->
+  <script type="module"
+    src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js">
+  </script>
+
+  <style>
+    body {
+      margin: 0;
+      background: #faf7f3;
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      text-align: center;
+    }
+    model-viewer {
+      width: 100vw;
+      height: 70vh;
+    }
+    .text {
+      padding: 16px;
+    }
+  </style>
+</head>
+
+<body>
+  <model-viewer
+    src="model.glb"
+    camera-controls
+    auto-rotate
+    rotation-per-second="15deg"
+    shadow-intensity="1"
+    exposure="1.1"
+    ar
+  ></model-viewer>
+
+  <div class="text">
+    <h2>🎓 Graduation Day</h2>
+    <p>2026.02.XX</p>
+    <p>함께해 주셔서 감사합니다</p>
+  </div>
+</body>
+</html>
