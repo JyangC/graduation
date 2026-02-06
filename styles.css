@@ -318,3 +318,31 @@ model-viewer{
   color: #3c3631;
   line-height: 1.75;
 }
+
+
+
+/* 커버 전환 애니메이션 */
+#cover{
+  transform: translateY(0);
+  opacity: 1;
+}
+
+#cover.opening{
+  transform: translateY(40px);
+  opacity: 0;
+  transition: transform 900ms cubic-bezier(.22,.61,.36,1),
+              opacity 700ms ease;
+}
+
+/* 본문 등장 애니메이션 */
+#content{
+  opacity: 0;
+  transform: translateY(18px);
+}
+
+#content.opened{
+  opacity: 1;
+  transform: translateY(0);
+  transition: transform 900ms cubic-bezier(.22,.61,.36,1),
+              opacity 700ms ease;
+}
