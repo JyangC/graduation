@@ -200,24 +200,18 @@ body{
    Hero with 3D
    ========================= */
 
-.hero{
-  width: 100%;
-  max-width: 720px;
-  margin: 0 auto;
-  padding: 0px 16px 0;
-}
+.hero{ padding: 0 16px 0; }
 
-/* ✅ 모델 뷰어: 프레임/하얀배경 제거 */
 model-viewer{
   width: 100%;
-  height: min(62vh, 520px);
-  margin-top: -16px;
+  height: min(70vh, 560px);
+  margin-top: -10px;   /* 여백 줄이기: -8 ~ -12 사이 추천 */
   border-radius: 18px;
-  border: none;
   background: transparent;
+  border: none;
   box-shadow: none;
-  overflow: visible;
 }
+
 
 .heroTitle{
   padding: 14px 6px 4px;
