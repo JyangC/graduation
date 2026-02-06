@@ -4,7 +4,12 @@
   font-weight: normal;
   font-display: swap;
 }
-
+@font-face {
+    font-family: 'BonmyeongjoSourceHanSerif';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NotoSerifKR.woff') format('woff');
+    font-weight: normal;
+    font-display: swap;
+}
 
 :root{
   --bg: #faf7f3;
@@ -27,7 +32,7 @@ body{
   background: var(--bg);
   color: var(--ink);
   
-  font-family: 'KccAnjunggeun',
+  font-family: 'BonmyeongjoSourceHanSerif',
                -apple-system, BlinkMacSystemFont,
                "Apple SD Gothic Neo", "Noto Sans KR",
                "Segoe UI", Roboto, sans-serif;
@@ -244,6 +249,8 @@ model-viewer{
   border-radius: 18px;
   box-shadow: 0 12px 28px rgba(0,0,0,0.06);
   backdrop-filter: blur(6px);
+  font-family: 'KccAnjunggeun', "Noto Serif KR", serif;
+
 }
 
 /* 마젠타 얇은 라인 */
@@ -256,6 +263,8 @@ model-viewer{
   border-radius: 999px;
   background: var(--accent-magenta);
   opacity: 0.9;
+  font-family: 'KccAnjunggeun', "Noto Serif KR", serif;
+
 }
 
 .paper h2{
@@ -265,19 +274,27 @@ model-viewer{
   text-align: center;
   color: var(--ink);
   letter-spacing: 0.04em;
+  font-family: 'KccAnjunggeun', "Noto Serif KR", serif;
+
 }
 
 .paper p{
   margin: 14px 0;
   line-height: 2;
-  font-size: 15px;
+  font-size: 16px;
   color: var(--ink);
+  font-family: 'KccAnjunggeun', "Noto Serif KR", serif;
+
+  
 }
 
 .sign{
   margin-top: 18px;
   text-align: center;
+  font-family: 'KccAnjunggeun', "Noto Serif KR", serif;
 }
+
+
 
 /* 구분선(마젠타 은은) */
 .divider{
