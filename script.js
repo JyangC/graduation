@@ -13,6 +13,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
   // -----------------------------
   // 1) Reveal (스크롤 페이드인)
+  //    - "열기" 버튼으로 show를 강제하지 않음
   // -----------------------------
   const reveals = document.querySelectorAll(".reveal");
   const io = new IntersectionObserver(
@@ -36,7 +37,6 @@ window.addEventListener("DOMContentLoaded", () => {
   function playBgmSync() {
     if (!bgm) return;
 
-    // iOS/Safari: 클릭 이벤트 안에서 동기적으로 호출하는 게 제일 안정적
     bgm.volume = 0.25;
 
     const p = bgm.play();
@@ -46,10 +46,8 @@ window.addEventListener("DOMContentLoaded", () => {
         if (toggleMusicBtn) toggleMusicBtn.textContent = "음악 끄기";
       }).catch((err) => {
         console.log("BGM blocked:", err);
-        // 막혀도 UI는 그대로 진행
       });
     } else {
-      // 오래된 브라우저 fallback
       playing = true;
       if (toggleMusicBtn) toggleMusicBtn.textContent = "음악 끄기";
     }
@@ -63,37 +61,48 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 
   // -----------------------------
-  // 3) Model camera: "정면" 리셋
+  // 3) Model camera: 시작 구도(살짝 왼쪽) + 전환 후 회전
   // -----------------------------
-  // 기본 정면 프리셋 (필요하면 값만 바꿔서 미세조정)
-  const FRONT_ORBIT = "0deg 75deg";
+  // ✅ 시작할 때 "살짝 왼쪽을 보고" 정지 상태
+  const START_ORBIT = "-18deg 70deg 1.15m";
+  const START_TARGET = "0m 0.95m 0m";
+  const ROTATE_SPEED = "10deg";
 
-  function resetModelFront() {
+  function setModelStartPose() {
     if (!mv) return;
-
-    // 모델이 로드되기 전이면 로드 후에 적용
-    const apply = () => {
-      mv.setAttribute("camera-orbit", FRONT_ORBIT);
-      mv.setAttribute("camera-target", FRONT_TARGET);
-      // 즉시 스냅
-      mv.setAttribute("camera-controls", "");
-    };
-
-    // 이미 로드되면 바로
-    if (mv.loaded) {
-      apply();
-    } else {
-      // load 이벤트 후 1회 적용
-      const onLoad = () => {
-        apply();
-        mv.removeEventListener("load", onLoad);
-      };
-      mv.addEventListener("load", onLoad);
-    }
+    mv.setAttribute("camera-orbit", START_ORBIT);
+    mv.setAttribute("camera-target", START_TARGET);
+    mv.setAttribute("field-of-view", "32deg");
   }
 
+  function startAutoRotateWhenReady() {
+    if (!mv) return;
+
+    const start = () => {
+      // 시작 구도를 먼저 강제 스냅
+      setModelStartPose();
+
+      // 그 다음에만 회전 시작 (로딩 중 회전 방지)
+      mv.setAttribute("auto-rotate", "");
+      mv.setAttribute("rotation-per-second", ROTATE_SPEED);
+    };
+
+    // 이미 로드 완료면 즉시
+    if (mv.loaded) {
+      start();
+      return;
+    }
+
+    // 로딩 중이면 load 후 1회 실행
+    mv.addEventListener("load", start, { once: true });
+  }
+
+  // 페이지 로드 시: 시작 구도는 미리 맞춰두되, 회전은 절대 시작하지 않음
+  setModelStartPose();
+  if (mv) mv.removeAttribute("auto-rotate");
+
   // -----------------------------
-  // 4) Open button: 전환 + 음악 + 모델
+  // 4) Open button: 전환 + 음악 + (전환 후) 모델 회전 시작
   // -----------------------------
   openBtn.addEventListener("click", () => {
     console.log("open clicked");
@@ -105,15 +114,14 @@ window.addEventListener("DOMContentLoaded", () => {
     cover.classList.add("opening");
     content.classList.add("opened");
 
-    // ✅ 4) 모델 카메라를 정면으로 리셋
-    // 전환 후 적용이 자연스러워서 약간 딜레이
+    // ✅ 3) 전환이 끝난 뒤에만 회전 시작 (로드가 안 됐으면 load 대기)
+    //  - 900ms: cover->content 전환 타이밍과 맞춤
     setTimeout(() => {
-      resetModelFront();
-      mv?.setAttribute("auto-rotate", "");
-      mv?.setAttribute("rotation-per-second", "10deg");
+      startAutoRotateWhenReady();
+      mv?.setAttribute("interaction-prompt", "once");
     }, 900);
 
-    // ✅ 5) 커버 제거
+    // ✅ 4) 커버 제거
     setTimeout(() => cover.remove(), 1000);
   });
 
@@ -123,12 +131,8 @@ window.addEventListener("DOMContentLoaded", () => {
   if (toggleMusicBtn) {
     toggleMusicBtn.addEventListener("click", () => {
       if (!bgm) return;
-
-      if (!playing) {
-        playBgmSync();
-      } else {
-        pauseBgm();
-      }
+      if (!playing) playBgmSync();
+      else pauseBgm();
     });
   }
 });
