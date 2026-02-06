@@ -87,7 +87,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
     const start = () => {
       mv.setAttribute("auto-rotate", "");
-      mv.setAttribute("rotation-per-second", "10deg");
+      mv.setAttribute("rotation-per-second", "-10deg");
       mv.setAttribute("interaction-prompt", "once");
     };
 
