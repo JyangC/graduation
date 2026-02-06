@@ -69,7 +69,7 @@ window.addEventListener("DOMContentLoaded", () => {
     // 커버 제거 (애니메이션 끝난 뒤)
     setTimeout(() => {
       try { cover.remove(); } catch (e) {}
-    }, 900);
+    }, 300);
   }
 
   // -----------------------------
