@@ -298,7 +298,7 @@ model-viewer{
 
 /* 구분선(마젠타 은은) */
 .divider{
-  margin: 22px 0;
+  margin: 18px 0;
   border: none;
   height: 1px;
   background: linear-gradient(to right, transparent, rgba(143,43,74,0.35), transparent);
@@ -344,6 +344,10 @@ model-viewer{
   font-size: 14px;
   font-weight: 700;
 }
+/* 모바일에서 버튼 줄바꿈되면 예쁘게 */
+@media (max-width: 360px){
+  .actions{ flex-direction: column; }
+}
 
 .btn.ghost{
   background: transparent;
@@ -373,4 +377,16 @@ model-viewer{
 .reveal.show{
   opacity: 1;
   transform: translateY(0);
+}
+
+
+/* 2) 일시/장소/버튼은 정갈한 폰트로 */
+.info,
+.actions,
+.btn,
+#toggleMusic{
+ font-family: 'BonmyeongjoSourceHanSerif',
+               -apple-system, BlinkMacSystemFont,
+               "Apple SD Gothic Neo", "Noto Sans KR",
+               "Segoe UI", Roboto, sans-serif;
 }
