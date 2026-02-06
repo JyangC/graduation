@@ -66,7 +66,7 @@ window.addEventListener("DOMContentLoaded", () => {
   // 3) Model camera: "정면" 리셋
   // -----------------------------
   // 기본 정면 프리셋 (필요하면 값만 바꿔서 미세조정)
-  const FRONT_ORBIT = "0deg 75deg 1.6m";
+  const FRONT_ORBIT = "0deg 75deg";
 
   function resetModelFront() {
     if (!mv) return;
