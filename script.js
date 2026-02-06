@@ -116,8 +116,10 @@ window.addEventListener("DOMContentLoaded", () => {
     //  - 900ms: cover->content 전환 타이밍과 맞춤
     setTimeout(() => {
       startAutoRotateWhenReady();
+      mv?.setAttribute("auto-rotate", "");
+      mv?.setAttribute("rotation-per-second", "10deg");
       mv?.setAttribute("interaction-prompt", "once");
-    }, 650);
+    }, 400);
 
     // ✅ 4) 커버 제거
     setTimeout(() => cover.remove(), 1000);
