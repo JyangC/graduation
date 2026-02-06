@@ -21,9 +21,11 @@ body{
   transform: translateY(6px);
   transition: 700ms ease;
 }
-#content.show{
-  opacity:1;
+#content.opened{
+  opacity: 1;
   transform: translateY(0);
+  transition: transform 900ms cubic-bezier(.22,.61,.36,1),
+              opacity 700ms ease;
 }
 
 /* Cover */
