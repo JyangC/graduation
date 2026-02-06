@@ -109,12 +109,9 @@ window.addEventListener("DOMContentLoaded", () => {
     // 전환 후 적용이 자연스러워서 약간 딜레이
     setTimeout(() => {
       resetModelFront();
-
-      // 자동회전은 원하면 켜고, 싫으면 이 블록 삭제
       mv?.setAttribute("auto-rotate", "");
       mv?.setAttribute("rotation-per-second", "10deg");
-      mv?.setAttribute("interaction-prompt", "once");
-    }, 450);
+    }, 900);
 
     // ✅ 5) 커버 제거
     setTimeout(() => cover.remove(), 1000);
