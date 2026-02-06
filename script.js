@@ -6,27 +6,24 @@ window.addEventListener("DOMContentLoaded", () => {
   const mv = document.getElementById("mv");
   const toggleMusicBtn = document.getElementById("toggleMusic");
 
-  if (!openBtn || !cover || !content) {
-    console.log("Missing elements:", { openBtn, cover, content });
+  // 필수 요소 체크
+  if (!cover || !content || !openBtn) {
+    console.log("Missing elements:", { cover, content, openBtn });
     return;
   }
 
   // -----------------------------
   // 1) Reveal (스크롤 페이드인)
-  //    - "열기" 버튼으로 show를 강제하지 않음
   // -----------------------------
   const reveals = document.querySelectorAll(".reveal");
-  const io = new IntersectionObserver(
-    (entries) => {
-      for (const e of entries) {
-        if (e.isIntersecting) {
-          e.target.classList.add("show");
-          io.unobserve(e.target);
-        }
+  const io = new IntersectionObserver((entries) => {
+    for (const e of entries) {
+      if (e.isIntersecting) {
+        e.target.classList.add("show");
+        io.unobserve(e.target);
       }
-    },
-    { threshold: 0.12 }
-  );
+    }
+  }, { threshold: 0.12 });
   reveals.forEach((el) => io.observe(el));
 
   // -----------------------------
@@ -36,17 +33,13 @@ window.addEventListener("DOMContentLoaded", () => {
 
   function playBgmSync() {
     if (!bgm) return;
-
     bgm.volume = 0.25;
-
     const p = bgm.play();
     if (p && typeof p.then === "function") {
       p.then(() => {
         playing = true;
         if (toggleMusicBtn) toggleMusicBtn.textContent = "음악 끄기";
-      }).catch((err) => {
-        console.log("BGM blocked:", err);
-      });
+      }).catch((err) => console.log("BGM blocked:", err));
     } else {
       playing = true;
       if (toggleMusicBtn) toggleMusicBtn.textContent = "음악 끄기";
@@ -61,68 +54,58 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 
   // -----------------------------
-  // 3) Model camera: 시작 구도(살짝 왼쪽) + 전환 후 회전
+  // 3) Open transition (무조건 열리게)
   // -----------------------------
-  // -----------------------------
-// 3) Model camera: 시작 구도(전체) + 전환 후 회전
-// -----------------------------
-  const START_ORBIT = "-26deg 68deg 1.65m";
-  const START_TARGET = "0m 0.72m 0m";
-  const START_FOV = "34deg";
-  const ROTATE_SPEED = "10deg";
-  
-  function applyPose(){
-  
-  // 로드 후 1회: 시작 구도 고정(로딩 중 돌아가는 것 방지)
-  if (mv) {
-    mv.removeAttribute("auto-rotate");
-    mv.addEventListener("load", applyPose, { once: true });
+  function openInvitation() {
+    // 커버 → 사라짐 애니메이션
+    cover.classList.add("opening");
+
+    // 본문 → 보이기
+    content.classList.add("opened");
+
+    // 혹시 CSS에서 cover가 남아있어도 클릭 막지 않게
+    cover.style.pointerEvents = "none";
+
+    // 커버 제거 (애니메이션 끝난 뒤)
+    setTimeout(() => {
+      try { cover.remove(); } catch (e) {}
+    }, 900);
   }
-  
-  // 전환 후에만 회전 시작
-  function startRotateAfterOpen(){
+
+  // -----------------------------
+  // 4) Model rotate start (전환 후)
+  // -----------------------------
+  function startRotateAfterOpen() {
     if (!mv) return;
-  
+    // 로딩 중에는 안 돌게 (안전)
+    mv.removeAttribute("auto-rotate");
+
     const start = () => {
-      applyPose(); // 시작 구도 다시 한번 고정
       mv.setAttribute("auto-rotate", "");
-      mv.setAttribute("rotation-per-second", ROTATE_SPEED);
+      mv.setAttribute("rotation-per-second", "10deg");
+      mv.setAttribute("interaction-prompt", "once");
     };
-  
+
     if (mv.loaded) start();
     else mv.addEventListener("load", start, { once: true });
   }
-  
 
   // -----------------------------
-  // 4) Open button: 전환 + 음악 + (전환 후) 모델 회전 시작
+  // 5) Button handlers
   // -----------------------------
   openBtn.addEventListener("click", () => {
     console.log("open clicked");
 
-    // ✅ 1) 음악은 무조건 "가장 먼저" 동기 호출
+    // 1) 음악은 클릭 이벤트 안에서 먼저 시도
     playBgmSync();
 
-    // ✅ 2) 전환
-    cover.classList.add("opening");
-    content.classList.add("opened");
+    // 2) 초대장 열기(이건 무조건 실행)
+    openInvitation();
 
-    // ✅ 3) 전환이 끝난 뒤에만 회전 시작 (로드가 안 됐으면 load 대기)
-    //  - 900ms: cover->content 전환 타이밍과 맞춤
-    setTimeout(() => {
-      startAutoRotateWhenReady();
-      mv?.setAttribute("auto-rotate", "");
-      mv?.setAttribute("rotation-per-second", "10deg");
-      mv?.setAttribute("interaction-prompt", "once");
-    }, 400);
-
-    // ✅ 4) 커버 제거
-    setTimeout(() => cover.remove(), 1000);
+    // 3) 모델 회전은 전환 후 시작
+    setTimeout(() => startRotateAfterOpen(), 650);
   });
 
-  // -----------------------------
-  // 5) Music toggle button
-  // -----------------------------
   if (toggleMusicBtn) {
     toggleMusicBtn.addEventListener("click", () => {
       if (!bgm) return;
