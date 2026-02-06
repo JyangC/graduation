@@ -64,8 +64,8 @@ window.addEventListener("DOMContentLoaded", () => {
   // 3) Model camera: 시작 구도(살짝 왼쪽) + 전환 후 회전
   // -----------------------------
   // ✅ 시작할 때 "살짝 왼쪽을 보고" 정지 상태
-  const START_ORBIT = "30deg 70deg 1.35m";
-  const START_TARGET = "0m 0.8m 0m";
+  const START_ORBIT = "40deg 68deg 1.55m";
+  const START_TARGET = "0m 0.75m 0m";
   const ROTATE_SPEED = "10deg";
 
   function setModelStartPose() {
