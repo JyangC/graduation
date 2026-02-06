@@ -211,7 +211,7 @@ body{
 model-viewer{
   width: 100%;
   height: min(62vh, 520px);
-  margin-top: -18px;
+  margin-top: -26px;
   border-radius: 18px;
   border: none;
   background: transparent;
