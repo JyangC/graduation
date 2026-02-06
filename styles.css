@@ -27,64 +27,101 @@ body{
 }
 
 /* Cover */
+/* Cover (첫 화면 예쁘게) */
 #cover{
   position: fixed;
   inset: 0;
   display: grid;
   place-items: center;
-  background: radial-gradient(ellipse at top, #fff, #faf7f3 55%, #f3eee8);
+  background:
+    radial-gradient(ellipse at top, rgba(255,255,255,0.95), rgba(250,247,243,1) 55%, rgba(243,238,232,1)),
+    linear-gradient(180deg, rgba(143,43,74,0.05), transparent 40%);
   z-index: 9999;
   transition: 700ms ease;
-  padding: 18px;
+  padding: 20px;
 }
+
 #cover.hide{
   opacity: 0;
   pointer-events: none;
 }
 
+/* 카드가 '초대장 봉투'처럼 보이게 */
 .coverCard{
   width: min(520px, calc(100vw - 32px));
-  padding: 28px 22px;
-  border: 1px solid var(--line);
-  border-radius: 18px;
-  background: var(--paper);
-  backdrop-filter: blur(7px);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+  padding: 26px 22px 22px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.82);
+  border: 1px solid rgba(226,217,208,0.65);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.07);
+  backdrop-filter: blur(8px);
   text-align: center;
+  position: relative;
+  overflow: hidden;
 }
+
+/* 상단 마젠타 리본 라인 (B) */
+.coverCard::before{
+  content:"";
+  position:absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, rgba(143,43,74,0.75), transparent);
+}
+
+/* 은은한 종이 무늬 느낌(너무 티 안 나게) */
+.coverCard::after{
+  content:"";
+  position:absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(0,0,0,0.03), transparent 40%),
+    radial-gradient(circle at 80% 30%, rgba(0,0,0,0.02), transparent 45%),
+    radial-gradient(circle at 30% 80%, rgba(0,0,0,0.02), transparent 45%);
+  pointer-events:none;
+}
+
 .miniTitle{
+  position: relative;
   font-size: 12px;
-  letter-spacing: .06em;
+  letter-spacing: 0.08em;
   color: var(--muted);
 }
+
 .mainTitle{
-  margin: 10px 0 12px;
-  font-size: 22px;
-  font-weight: 700;
+  position: relative;
+  margin: 10px 0 10px;
+  font-size: 24px;
+  font-weight: 850;
 }
+
 .coverMeta{
+  position: relative;
   margin: 0 0 18px;
   font-size: 13px;
-  line-height: 1.6;
+  line-height: 1.65;
   color: #4b433d;
 }
-.hint{
-  margin-top: 12px;
-  font-size: 12px;
-  color: #7a6f66;
-}
+
+/* 버튼을 '의식감' 있게 */
 #openBtn{
+  position: relative;
   width: 100%;
-  padding: 12px 14px;
+  padding: 13px 14px;
   border: none;
-  border-radius: 14px;
-  background: var(--accent);
+  border-radius: 16px;
+  background: var(--accent-dark);
   color: #fff;
   font-size: 15px;
-  font-weight: 700;
+  font-weight: 850;
   cursor: pointer;
 }
+
+#openBtn:hover{ opacity: 0.96; }
 #openBtn:active{ transform: scale(0.99); }
+
 
 /* Hero with 3D */
 .hero{
