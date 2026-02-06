@@ -1,56 +1,61 @@
-const bgm = document.getElementById("bgm");
-const cover = document.getElementById("cover");
-const content = document.getElementById("content");
-const openBtn = document.getElementById("openBtn");
-const mv = document.getElementById("mv");
-const toggleMusicBtn = document.getElementById("toggleMusic");
+window.addEventListener("DOMContentLoaded", () => {
+  const bgm = document.getElementById("bgm");
+  const cover = document.getElementById("cover");
+  const content = document.getElementById("content");
+  const openBtn = document.getElementById("openBtn");
+  const mv = document.getElementById("mv");
+  const toggleMusicBtn = document.getElementById("toggleMusic");
 
-let playing = false;
-
-// 초대장 열기: 음악 시작 + 본문 표시 + (선택) 모델 자동회전 시작
-openBtn.addEventListener("click", async () => {
-  // 1) 음악 재생 (모바일은 사용자 클릭이 있어야 재생 가능)
-  try {
-    bgm.volume = 0.22; // 부모님용: 작게
-    await bgm.play();
-    playing = true;
-    if (toggleMusicBtn) toggleMusicBtn.textContent = "음악 끄기";
-  } catch (e) {
-    // 재생이 막혀도 초대장은 열리게
-    console.log("BGM blocked:", e);
+  if (!openBtn || !cover || !content) {
+    console.log("Missing elements:", { openBtn, cover, content });
+    return;
   }
 
-  // 2) 화면 전환
-  cover.classList.add("hide");
-  content.classList.add("show");
+  let playing = false;
 
-  // 3) 열기 후 모델만 살짝 자동회전 (원치 않으면 아래 2줄 삭제)
-  if (mv) {
-    mv.setAttribute("auto-rotate", "");
-    mv.setAttribute("rotation-per-second", "10deg");
-  }
+  openBtn.addEventListener("click", async () => {
+    console.log("open clicked"); // ✅ 디버그용 (잘 되면 콘솔에 찍힘)
 
-  // 4) 커버 제거(선택)
-  setTimeout(() => cover.remove(), 800);
-});
+    // 화면 전환 먼저 (음악이 막혀도 넘어가게)
+    cover.classList.add("hide");
+    content.classList.add("show");
+    setTimeout(() => cover.remove(), 800);
 
-// 음악 토글 버튼(본문 하단)
-if (toggleMusicBtn) {
-  toggleMusicBtn.addEventListener("click", async () => {
-    if (!playing) {
+    // 모델 자동회전(원치 않으면 삭제)
+    if (mv) {
+      mv.setAttribute("auto-rotate", "");
+      mv.setAttribute("rotation-per-second", "10deg");
+    }
+
+    // 음악 재생은 try로 (모바일 정책 때문에 실패 가능)
+    if (bgm) {
       try {
         bgm.volume = 0.22;
         await bgm.play();
         playing = true;
-        toggleMusicBtn.textContent = "음악 끄기";
+        if (toggleMusicBtn) toggleMusicBtn.textContent = "음악 끄기";
       } catch (e) {
         console.log("BGM blocked:", e);
       }
-      return;
     }
-
-    bgm.pause();
-    playing = false;
-    toggleMusicBtn.textContent = "음악 켜기";
   });
-}
+
+  if (toggleMusicBtn && bgm) {
+    toggleMusicBtn.addEventListener("click", async () => {
+      if (!playing) {
+        try {
+          bgm.volume = 0.22;
+          await bgm.play();
+          playing = true;
+          toggleMusicBtn.textContent = "음악 끄기";
+        } catch (e) {
+          console.log("BGM blocked:", e);
+        }
+      } else {
+        bgm.pause();
+        playing = false;
+        toggleMusicBtn.textContent = "음악 켜기";
+      }
+    });
+  }
+});
