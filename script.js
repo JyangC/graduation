@@ -30,34 +30,33 @@ window.addEventListener("DOMContentLoaded", () => {
 
   let playing = false;
 
-  openBtn.addEventListener("click", async () => {
-    console.log("open clicked"); // ✅ 디버그용 (잘 되면 콘솔에 찍힘)
-    document.querySelectorAll(".reveal").forEach(el => el.classList.add("show"));
+  openBtn?.addEventListener("click", async () => {
+  // 1) 음악 먼저 시도
+  await tryPlay();
 
+  // 2) 전환 시작
+  cover.classList.add("opening");
+  content.classList.add("opened");
 
-    // 화면 전환 먼저 (음악이 막혀도 넘어가게)
-    cover.classList.add("hide");
-    content.classList.add("show");
-    setTimeout(() => cover.remove(), 800);
+  // 3) reveal 텍스트는 전환 후 등장
+  setTimeout(() => {
+    document.querySelectorAll(".reveal").forEach(el =>
+      el.classList.add("show")
+    );
+  }, 300);
 
-    // 모델 자동회전(원치 않으면 삭제)
+  // 4) 모델 자동회전은 살짝 늦게
+  setTimeout(() => {
     if (mv) {
       mv.setAttribute("auto-rotate", "");
       mv.setAttribute("rotation-per-second", "10deg");
     }
+  }, 600);
 
-    // 음악 재생은 try로 (모바일 정책 때문에 실패 가능)
-    if (bgm) {
-      try {
-        bgm.volume = 0.22;
-        await bgm.play();
-        playing = true;
-        if (toggleMusicBtn) toggleMusicBtn.textContent = "음악 끄기";
-      } catch (e) {
-        console.log("BGM blocked:", e);
-      }
-    }
-  });
+  // 5) 커버 제거
+  setTimeout(() => cover.remove(), 1000);
+});
+
 
   if (toggleMusicBtn && bgm) {
     toggleMusicBtn.addEventListener("click", async () => {
