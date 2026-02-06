@@ -191,3 +191,90 @@ model-viewer{
   color: var(--muted);
   text-align: center;
 }
+
+
+
+:root{
+  --paper: rgba(255,255,255,0.72);
+  --paper2: rgba(255,255,255,0.86);
+  --line: #e2d9d0;
+  --muted: #6f645c;
+  --ink: #2e2e2e;
+  --accent: #8f2b4a; /* 마젠타 포인트(톤다운) */
+}
+
+/* Hero 여백 살짝 정갈하게 */
+.hero{
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 10px 16px 0;
+}
+
+/* 종이 카드(A) */
+.paper{
+  max-width: 720px;
+  margin: 12px auto 36px;
+  padding: 20px 18px 30px;
+
+  background: var(--paper);
+  border: 1px solid rgba(226,217,208,0.55);
+  border-radius: 18px;
+  box-shadow: 0 12px 28px rgba(0,0,0,0.06);
+  backdrop-filter: blur(6px);
+}
+
+/* 마젠타 얇은 라인(B): 카드 상단 장식 */
+.paper::before{
+  content:"";
+  display:block;
+  height: 2px;
+  width: 72px;
+  margin: 2px auto 14px;
+  border-radius: 999px;
+  background: var(--accent);
+  opacity: 0.9;
+}
+
+/* 제목/본문 정갈하게 */
+.paper h2{
+  margin: 8px 0 14px;
+  font-size: 16px;
+  font-weight: 750;
+  text-align: center;
+  color: var(--ink);
+}
+
+.paper p{
+  margin: 14px 0;
+  line-height: 1.95;
+  font-size: 15px;
+  color: var(--ink);
+}
+
+/* 구분선도 마젠타 아주 은은하게(B) */
+.divider{
+  margin: 22px 0;
+  border: none;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(143,43,74,0.35), transparent);
+}
+
+/* C: 문단 페이드인(기본 숨김) */
+.reveal{
+  opacity: 0;
+  transform: translateY(10px);
+  transition: 700ms ease;
+  will-change: opacity, transform;
+}
+.reveal.show{
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 정보 블록은 더 또렷하게 */
+.info{
+  font-size: 14px;
+  color: #3c3631;
+  line-height: 1.75;
+}
