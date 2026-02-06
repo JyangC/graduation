@@ -105,11 +105,6 @@ window.addEventListener("DOMContentLoaded", () => {
     cover.classList.add("opening");
     content.classList.add("opened");
 
-    // ✅ 3) 첫 화면 reveal은 전환 직후 바로 보이게
-    setTimeout(() => {
-      document.querySelectorAll(".reveal").forEach((el) => el.classList.add("show"));
-    }, 200);
-
     // ✅ 4) 모델 카메라를 정면으로 리셋
     // 전환 후 적용이 자연스러워서 약간 딜레이
     setTimeout(() => {
