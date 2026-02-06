@@ -31,31 +31,31 @@ window.addEventListener("DOMContentLoaded", () => {
   let playing = false;
 
   openBtn?.addEventListener("click", async () => {
-  // 1) 음악 먼저 시도
-  await tryPlay();
+  console.log("open clicked"); // 🔍 확인용
 
-  // 2) 전환 시작
+  // 1) 음악 먼저 시도 (실패해도 OK)
+  try { await tryPlay(); } catch(e){}
+
+  // 2) 전환 클래스 부여 (핵심)
   cover.classList.add("opening");
   content.classList.add("opened");
 
-  // 3) reveal 텍스트는 전환 후 등장
+  // 3) 텍스트 reveal은 전환 직후
   setTimeout(() => {
-    document.querySelectorAll(".reveal").forEach(el =>
-      el.classList.add("show")
-    );
-  }, 300);
+    document.querySelectorAll(".reveal")
+      .forEach(el => el.classList.add("show"));
+  }, 200);
 
-  // 4) 모델 자동회전은 살짝 늦게
+  // 4) 모델 자동회전(선택)
   setTimeout(() => {
-    if (mv) {
-      mv.setAttribute("auto-rotate", "");
-      mv.setAttribute("rotation-per-second", "10deg");
-    }
-  }, 600);
+    mv?.setAttribute("auto-rotate", "");
+    mv?.setAttribute("rotation-per-second", "10deg");
+  }, 500);
 
-  // 5) 커버 제거
+  // 5) 커버 완전 제거
   setTimeout(() => cover.remove(), 1000);
 });
+
 
 
   if (toggleMusicBtn && bgm) {
