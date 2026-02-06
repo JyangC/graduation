@@ -72,11 +72,6 @@ window.addEventListener("DOMContentLoaded", () => {
   const ROTATE_SPEED = "10deg";
   
   function applyPose(){
-    if (!mv) return;
-    mv.setAttribute("camera-orbit", START_ORBIT);
-    mv.setAttribute("camera-target", START_TARGET);
-    mv.setAttribute("field-of-view", START_FOV);
-  }
   
   // 로드 후 1회: 시작 구도 고정(로딩 중 돌아가는 것 방지)
   if (mv) {
