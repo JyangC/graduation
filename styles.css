@@ -243,7 +243,7 @@ model-viewer{
   max-width: 720px;
   margin: 12px auto 36px;
   padding: 20px 18px 30px;
-
+  text-align: center;
   background: var(--paper);
   border: 1px solid rgba(226,217,208,0.55);
   border-radius: 18px;
@@ -258,6 +258,7 @@ model-viewer{
   content:"";
   display:block;
   height: 2px;
+  text-align: center;
   width: 72px;
   margin: 2px auto 14px;
   border-radius: 999px;
@@ -282,6 +283,7 @@ model-viewer{
   margin: 14px 0;
   line-height: 2;
   font-size: 16px;
+  text-align: center;
   color: var(--ink);
   font-family: 'KccAnjunggeun', "Noto Serif KR", serif;
 
