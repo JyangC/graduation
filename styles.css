@@ -91,16 +91,20 @@ body{
   width: 100%;
   max-width: 720px;
   margin: 0 auto;
-  padding: 16px 16px 0;
+  padding: 10px 16px 0;
 }
+
 model-viewer{
   width: 100%;
   height: min(64vh, 520px);
   border-radius: 18px;
-  border: 1px solid var(--line);
-  background: #fff;
-  overflow: hidden;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+
+  overflow: visible;
 }
+
 .heroTitle{
   padding: 14px 6px 4px;
   text-align: center;
