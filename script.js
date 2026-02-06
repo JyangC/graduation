@@ -64,7 +64,7 @@ window.addEventListener("DOMContentLoaded", () => {
   // 3) Model camera: 시작 구도(살짝 왼쪽) + 전환 후 회전
   // -----------------------------
   // ✅ 시작할 때 "살짝 왼쪽을 보고" 정지 상태
-  const START_ORBIT = "-18deg 70deg 1.15m";
+  const START_ORBIT = "-32deg 70deg 1.15m";
   const START_TARGET = "0m 0.95m 0m";
   const ROTATE_SPEED = "10deg";
 
@@ -119,7 +119,7 @@ window.addEventListener("DOMContentLoaded", () => {
     setTimeout(() => {
       startAutoRotateWhenReady();
       mv?.setAttribute("interaction-prompt", "once");
-    }, 900);
+    }, 650);
 
     // ✅ 4) 커버 제거
     setTimeout(() => cover.remove(), 1000);
