@@ -210,8 +210,8 @@ body{
 /* ✅ 모델 뷰어: 프레임/하얀배경 제거 */
 model-viewer{
   width: 100%;
-  height: 70vh;
-  margin-top: -16px;
+  height: min(62vh, 520px);
+  margin-top: -18px;
   border-radius: 18px;
   border: none;
   background: transparent;
