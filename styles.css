@@ -1,77 +1,49 @@
 :root{
   --bg: #faf7f3;
-  --paper: rgba(255,255,255,0.78);
+
+  /* Paper */
+  --paper: rgba(255,255,255,0.72);
   --ink: #2e2e2e;
   --muted: #6f645c;
   --line: #e2d9d0;
-  --accent: #2f2a26;
+
+  /* Colors */
+  --accent-dark: #2f2a26;      /* 버튼/텍스트용 진한 브라운 */
+  --accent-magenta: #8f2b4a;   /* 포인트 마젠타(톤다운) */
 }
 
-*{ box-sizing:border-box; }
+*{ box-sizing: border-box; }
+
 body{
-  margin:0;
+  margin: 0;
   background: var(--bg);
   color: var(--ink);
   font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", "Segoe UI", Roboto, sans-serif;
 }
 
-/* Content reveal */
-#content{
-  opacity:0;
-  transform: translateY(6px);
-  transition: 700ms ease;
-}
-#content.opened{
-  opacity: 1;
-  transform: translateY(0);
-  transition: transform 900ms cubic-bezier(.22,.61,.36,1),
-              opacity 700ms ease;
-}
+/* =========================
+   Cover (첫 페이지 + 사진)
+   ========================= */
 
-/* Cover */
-/* Cover (첫 화면 예쁘게) */
 #cover{
   position: fixed;
   inset: 0;
   display: grid;
   place-items: center;
+
+  /* 사진 없을 때도 예쁘게 보이도록 기본 배경 */
   background:
     radial-gradient(ellipse at top, rgba(255,255,255,0.95), rgba(250,247,243,1) 55%, rgba(243,238,232,1)),
     linear-gradient(180deg, rgba(143,43,74,0.05), transparent 40%);
+
   z-index: 9999;
-  transition: 700ms ease;
   padding: 20px;
+
+  opacity: 1;
+  transform: translateY(0);
 }
 
-#cover.hide{
-  opacity: 0;
-  pointer-events: none;
-}
-
-/* 카드가 '초대장 봉투'처럼 보이게 */
-.coverCard{
-  width: min(520px, calc(100vw - 32px));
-  padding: 26px 22px 22px;
-  border-radius: 20px;
-  background: rgba(255,255,255,0.82);
-  border: 1px solid rgba(226,217,208,0.65);
-  box-shadow: 0 18px 40px rgba(0,0,0,0.07);
-  backdrop-filter: blur(8px);
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-
-/* 상단 마젠타 리본 라인 (B) */
-.coverCard::before{
-  content:"";
-  position:absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, transparent, rgba(143,43,74,0.75), transparent);
-}
+/* ✅ 커버 배경 사진 */
 .coverPhoto{
   position: absolute;
   inset: 0;
@@ -81,7 +53,45 @@ body{
   filter: brightness(0.92) saturate(0.95);
   z-index: 0;
 }
-/* 은은한 종이 무늬 느낌(너무 티 안 나게) */
+
+/* ✅ 사진 위에 종이 오버레이(가독성 + 따뜻함) */
+#cover::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background: rgba(250,247,243,0.75);
+  z-index: 1;
+}
+
+/* 커버 카드(봉투 느낌) */
+.coverCard{
+  width: min(520px, calc(100vw - 32px));
+  padding: 26px 22px 22px;
+  border-radius: 20px;
+
+  background: rgba(255,255,255,0.82);
+  border: 1px solid rgba(226,217,208,0.65);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.07);
+  backdrop-filter: blur(8px);
+
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  z-index: 2; /* cover::after 위로 */
+}
+
+/* 상단 마젠타 리본 라인 */
+.coverCard::before{
+  content:"";
+  position:absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, rgba(143,43,74,0.75), transparent);
+}
+
+/* 은은한 종이 무늬 */
 .coverCard::after{
   content:"";
   position:absolute;
@@ -90,7 +100,7 @@ body{
     radial-gradient(circle at 20% 20%, rgba(0,0,0,0.03), transparent 40%),
     radial-gradient(circle at 80% 30%, rgba(0,0,0,0.02), transparent 45%),
     radial-gradient(circle at 30% 80%, rgba(0,0,0,0.02), transparent 45%);
-  pointer-events:none;
+  pointer-events: none;
 }
 
 .miniTitle{
@@ -115,28 +125,60 @@ body{
   color: #4b433d;
 }
 
+/* 커버 버튼 (라벨 스티커 느낌) */
 #openBtn{
-  width:100%;
+  width: 100%;
   padding: 13px 14px;
   border-radius: 14px;
+
   border: 1px solid rgba(226,217,208,0.95);
   background: rgba(255,255,255,0.86);
-  color:#2e2e2e;
-  font-size:15px;
-  font-weight:800;
-  cursor:pointer;
+  color: #2e2e2e;
+
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+
   box-shadow: 0 10px 22px rgba(0,0,0,0.06);
   transition: transform 120ms ease, box-shadow 120ms ease, opacity 120ms ease;
 }
-#openBtn:hover{ opacity:0.98; }
+
+#openBtn:hover{ opacity: 0.98; }
+
 #openBtn:active{
   transform: scale(0.99) translateY(1px);
   box-shadow: 0 6px 14px rgba(0,0,0,0.06);
 }
 
+/* ✅ 커버 전환(열기) */
+#cover.opening{
+  transform: translateY(40px);
+  opacity: 0;
+  transition: transform 900ms cubic-bezier(.22,.61,.36,1),
+              opacity 700ms ease;
+  pointer-events: none;
+}
 
+/* =========================
+   Content transition
+   ========================= */
 
-/* Hero with 3D */
+#content{
+  opacity: 0;
+  transform: translateY(18px);
+}
+
+#content.opened{
+  opacity: 1;
+  transform: translateY(0);
+  transition: transform 900ms cubic-bezier(.22,.61,.36,1),
+              opacity 700ms ease;
+}
+
+/* =========================
+   Hero with 3D
+   ========================= */
+
 .hero{
   width: 100%;
   max-width: 720px;
@@ -144,6 +186,7 @@ body{
   padding: 10px 16px 0;
 }
 
+/* ✅ 모델 뷰어: 프레임/하얀배경 제거 */
 model-viewer{
   width: 100%;
   height: min(64vh, 520px);
@@ -151,7 +194,6 @@ model-viewer{
   border: none;
   background: transparent;
   box-shadow: none;
-
   overflow: visible;
 }
 
@@ -159,109 +201,23 @@ model-viewer{
   padding: 14px 6px 4px;
   text-align: center;
 }
+
 .heroKicker{
   font-size: 12px;
   color: var(--muted);
-  letter-spacing: .04em;
+  letter-spacing: 0.04em;
 }
+
 .heroTitle h1{
   margin: 6px 0 0;
   font-size: 20px;
   font-weight: 750;
 }
 
-/* Paper text */
-.paper{
-  max-width: 720px;
-  margin: 10px auto 36px;
-  padding: 22px 18px 30px;
-}
-.paper h2{
-  margin: 10px 0 16px;
-  font-size: 16px;
-  font-weight: 700;
-}
-.paper p{
-  margin: 14px 0;
-  line-height: 1.9;
-  font-size: 15px;
-}
-.sign{
-  margin-top: 18px;
-}
+/* =========================
+   Paper card (A) + accent (B)
+   ========================= */
 
-.divider{
-  margin: 22px 0;
-  border: none;
-  height: 1px;
-  background: var(--line);
-}
-
-.info{
-  font-size: 14px;
-  color: #3c3631;
-  line-height: 1.7;
-}
-.row{
-  display: grid;
-  grid-template-columns: 48px 1fr;
-  gap: 10px;
-  padding: 8px 0;
-}
-.k{ color: var(--muted); }
-.sub{ color: var(--muted); font-size: 13px; }
-
-/* Actions */
-.actions{
-  display: flex;
-  gap: 10px;
-  margin-top: 18px;
-}
-.btn{
-  flex: 1;
-  text-align: center;
-  text-decoration: none;
-  border: 1px solid var(--accent);
-  background: var(--accent);
-  color: #fff;
-  padding: 12px 12px;
-  border-radius: 14px;
-  font-size: 14px;
-  font-weight: 700;
-}
-.btn.ghost{
-  background: transparent;
-  color: var(--accent);
-}
-.btn:active{ transform: scale(0.99); }
-
-.footerNote{
-  margin-top: 18px;
-  font-size: 12px;
-  color: var(--muted);
-  text-align: center;
-}
-
-
-
-:root{
-  --paper: rgba(255,255,255,0.72);
-  --paper2: rgba(255,255,255,0.86);
-  --line: #e2d9d0;
-  --muted: #6f645c;
-  --ink: #2e2e2e;
-  --accent: #8f2b4a; /* 마젠타 포인트(톤다운) */
-}
-
-/* Hero 여백 살짝 정갈하게 */
-.hero{
-  width: 100%;
-  max-width: 720px;
-  margin: 0 auto;
-  padding: 10px 16px 0;
-}
-
-/* 종이 카드(A) */
 .paper{
   max-width: 720px;
   margin: 12px auto 36px;
@@ -274,7 +230,7 @@ model-viewer{
   backdrop-filter: blur(6px);
 }
 
-/* 마젠타 얇은 라인(B): 카드 상단 장식 */
+/* 마젠타 얇은 라인 */
 .paper::before{
   content:"";
   display:block;
@@ -282,11 +238,10 @@ model-viewer{
   width: 72px;
   margin: 2px auto 14px;
   border-radius: 999px;
-  background: var(--accent);
+  background: var(--accent-magenta);
   opacity: 0.9;
 }
 
-/* 제목/본문 정갈하게 */
 .paper h2{
   margin: 8px 0 14px;
   font-size: 16px;
@@ -302,7 +257,12 @@ model-viewer{
   color: var(--ink);
 }
 
-/* 구분선도 마젠타 아주 은은하게(B) */
+.sign{
+  margin-top: 18px;
+  text-align: center;
+}
+
+/* 구분선(마젠타 은은) */
 .divider{
   margin: 22px 0;
   border: none;
@@ -310,49 +270,73 @@ model-viewer{
   background: linear-gradient(to right, transparent, rgba(143,43,74,0.35), transparent);
 }
 
-/* C: 문단 페이드인(기본 숨김) */
-.reveal{
-  opacity: 0;
-  transform: translateY(10px);
-  transition: 700ms ease;
-  will-change: opacity, transform;
-}
-.reveal.show{
-  opacity: 1;
-  transform: translateY(0);
-}
+/* =========================
+   Info + Actions
+   ========================= */
 
-/* 정보 블록은 더 또렷하게 */
 .info{
   font-size: 14px;
   color: #3c3631;
   line-height: 1.75;
 }
 
-
-
-/* 커버 전환 애니메이션 */
-#cover{
-  transform: translateY(0);
-  opacity: 1;
+.row{
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 10px;
+  padding: 8px 0;
 }
 
-#cover.opening{
-  transform: translateY(40px);
+.k{ color: var(--muted); }
+.sub{ color: var(--muted); font-size: 13px; }
+
+.actions{
+  display: flex;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.btn{
+  flex: 1;
+  text-align: center;
+  text-decoration: none;
+
+  border: 1px solid var(--accent-dark);
+  background: var(--accent-dark);
+  color: #fff;
+
+  padding: 12px 12px;
+  border-radius: 14px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.btn.ghost{
+  background: transparent;
+  color: var(--accent-dark);
+}
+
+.btn:active{ transform: scale(0.99); }
+
+.footerNote{
+  margin-top: 18px;
+  font-size: 12px;
+  color: var(--muted);
+  text-align: center;
+}
+
+/* =========================
+   Reveal animation (C)
+   ========================= */
+
+.reveal{
   opacity: 0;
-  transition: transform 900ms cubic-bezier(.22,.61,.36,1),
-              opacity 700ms ease;
+  transform: translateY(10px);
+  transition: 700ms ease;
+  will-change: opacity, transform;
 }
 
-/* 본문 등장 애니메이션 */
-#content{
-  opacity: 0;
-  transform: translateY(18px);
-}
-
-#content.opened{
+.reveal.show{
   opacity: 1;
   transform: translateY(0);
-  transition: transform 900ms cubic-bezier(.22,.61,.36,1),
-              opacity 700ms ease;
 }
