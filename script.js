@@ -63,43 +63,41 @@ window.addEventListener("DOMContentLoaded", () => {
   // -----------------------------
   // 3) Model camera: 시작 구도(살짝 왼쪽) + 전환 후 회전
   // -----------------------------
-  // ✅ 시작할 때 "살짝 왼쪽을 보고" 정지 상태
-  const START_ORBIT = "40deg 68deg 1.55m";
-  const START_TARGET = "0m 0.75m 0m";
+  // -----------------------------
+// 3) Model camera: 시작 구도(전체) + 전환 후 회전
+// -----------------------------
+  const START_ORBIT = "-26deg 68deg 1.65m";
+  const START_TARGET = "0m 0.72m 0m";
+  const START_FOV = "34deg";
   const ROTATE_SPEED = "10deg";
-
-  function setModelStartPose() {
+  
+  function applyPose(){
     if (!mv) return;
     mv.setAttribute("camera-orbit", START_ORBIT);
     mv.setAttribute("camera-target", START_TARGET);
-    mv.setAttribute("field-of-view", "32deg");
+    mv.setAttribute("field-of-view", START_FOV);
   }
-
-  function startAutoRotateWhenReady() {
+  
+  // 로드 후 1회: 시작 구도 고정(로딩 중 돌아가는 것 방지)
+  if (mv) {
+    mv.removeAttribute("auto-rotate");
+    mv.addEventListener("load", applyPose, { once: true });
+  }
+  
+  // 전환 후에만 회전 시작
+  function startRotateAfterOpen(){
     if (!mv) return;
-
+  
     const start = () => {
-      // 시작 구도를 먼저 강제 스냅
-      setModelStartPose();
-
-      // 그 다음에만 회전 시작 (로딩 중 회전 방지)
+      applyPose(); // 시작 구도 다시 한번 고정
       mv.setAttribute("auto-rotate", "");
       mv.setAttribute("rotation-per-second", ROTATE_SPEED);
     };
-
-    // 이미 로드 완료면 즉시
-    if (mv.loaded) {
-      start();
-      return;
-    }
-
-    // 로딩 중이면 load 후 1회 실행
-    mv.addEventListener("load", start, { once: true });
+  
+    if (mv.loaded) start();
+    else mv.addEventListener("load", start, { once: true });
   }
-
-  // 페이지 로드 시: 시작 구도는 미리 맞춰두되, 회전은 절대 시작하지 않음
-  setModelStartPose();
-  if (mv) mv.removeAttribute("auto-rotate");
+  
 
   // -----------------------------
   // 4) Open button: 전환 + 음악 + (전환 후) 모델 회전 시작
