@@ -75,7 +75,7 @@ window.addEventListener("DOMContentLoaded", () => {
     // 애니메이션이 보일 만큼은 남겨두고 제거
     setTimeout(() => {
       if (cover && cover.parentNode) cover.parentNode.removeChild(cover);
-    }, 900);
+    }, 200);
   }
 
   /* -----------------------------
@@ -110,7 +110,7 @@ window.addEventListener("DOMContentLoaded", () => {
     openInvitation();
 
     // 3) 모델 회전은 전환 후 시작
-    setTimeout(startRotateAfterOpen, 650);
+    setTimeout(startRotateAfterOpen, 30);
   });
 
   if (toggleMusicBtn) {
