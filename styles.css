@@ -250,7 +250,7 @@ model-viewer{
   border-radius: 18px;
   box-shadow: 0 12px 28px rgba(0,0,0,0.06);
   backdrop-filter: blur(6px);
-  font-family: 'KccAnjunggeun', "Noto Serif KR", serif;
+  /*font-family: 'KccAnjunggeun', "Noto Serif KR", serif;*/
 
 }
 
@@ -265,7 +265,7 @@ model-viewer{
   border-radius: 999px;
   background: var(--accent-magenta);
   opacity: 0.9;
-  font-family: 'KccAnjunggeun', "Noto Serif KR", serif;
+  /*font-family: 'KccAnjunggeun', "Noto Serif KR", serif;*/
 
 }
 
@@ -276,7 +276,7 @@ model-viewer{
   text-align: center;
   color: var(--ink);
   letter-spacing: 0.04em;
-  font-family: 'KccAnjunggeun', "Noto Serif KR", serif;
+  /*font-family: 'KccAnjunggeun', "Noto Serif KR", serif;*/
 
 }
 
@@ -286,7 +286,7 @@ model-viewer{
   font-size: 16px;
   text-align: center;
   color: var(--ink);
-  font-family: 'KccAnjunggeun', "Noto Serif KR", serif;
+  /*font-family: 'KccAnjunggeun', "Noto Serif KR", serif;*/
 
   
 }
@@ -294,7 +294,7 @@ model-viewer{
 .sign{
   margin-top: 18px;
   text-align: center;
-  font-family: 'KccAnjunggeun', "Noto Serif KR", serif;
+  /*font-family: 'KccAnjunggeun', "Noto Serif KR", serif;*/
 }
 
 
