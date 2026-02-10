@@ -75,7 +75,7 @@ window.addEventListener("DOMContentLoaded", () => {
     // 애니메이션이 보일 만큼은 남겨두고 제거
     setTimeout(() => {
       if (cover && cover.parentNode) cover.parentNode.removeChild(cover);
-    }, 200);
+    }, 50);
   }
 
   /* -----------------------------
