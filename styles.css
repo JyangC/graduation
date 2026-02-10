@@ -146,8 +146,12 @@ body{
   color: #4b433d;
 }
 
+
+
 /* 커버 버튼: 사진 하단 중앙에 떠 있게 */
 #openBtn{
+  
+
   position: fixed;              /* ✅ cover grid 영향 안 받게 */
   left: 50%;
   bottom: 22px;                 /* ✅ 하단 중앙 */
@@ -159,7 +163,8 @@ body{
   border-radius: 14px;
 
   border: 1px solid rgba(226,217,208,0.95);
-  background: rgba(255,255,255,0.92);
+  /*background: rgba(255,255,255,0.92);*/
+  background: red !important;
   color: #2e2e2e;
 
   font-size: 15px;
