@@ -99,7 +99,7 @@ body{
   position: relative;
   overflow: hidden;
   z-index: 2; /* cover::after 위로 */
-  transform: translateY(60px); /* 40~90px 사이로 조절 */
+  transform: translateY(240px); 
 }
 
 /* 상단 마젠타 리본 라인 */
